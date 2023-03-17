@@ -12,7 +12,7 @@ export class SigninComponent {
   password!: string;
   passwordConf!: string;
   email!: string;
-  birthDate!: string;
+  birthDate!: Date;
   phoneNumber!: string;
 
   submit(){
