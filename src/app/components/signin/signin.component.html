@@ -1,0 +1,29 @@
+<form>
+  <label for="username">Username:</label>
+  <input type="text" id="username" [(ngModel)]="username" name="username">
+  <br>
+  <label for="email">Email:</label>
+  <input type="text" id="email" [(ngModel)]="email" name="email">
+  <br>
+  <label for="phoneNumber">Phone number:</label>
+  <input type="text" id="phoneNumber" [(ngModel)]="phoneNumber" name="phonenumber">
+  <br>
+  <label for="password">Password:</label>
+  <input type="password" id="password" [(ngModel)]="password" name="password">
+  <br>
+  <label for="passwordConf">Confirm password:</label>
+  <input type="password" id="passwordConf" [(ngModel)]="passwordConf" name="passwordConf">
+  <br>
+  <br>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker">
+      <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <br>
+  <button type="submit" (click)="submit()">Login</button>
+</form>
