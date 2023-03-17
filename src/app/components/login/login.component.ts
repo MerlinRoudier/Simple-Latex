@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { auth } from '../../firebase-config'
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+
 
 @Component({
   selector: 'app-login',
@@ -6,11 +10,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username!: string;
+  email!: string;
   password!: string;
 
   login() {
-    // Code to handle login logic
-    console.log("hello world")
+    signInWithEmailAndPassword(auth, this.email, this.password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
   }
 }

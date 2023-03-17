@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { auth } from '../../firebase-config'
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 
 
 
@@ -8,30 +11,33 @@ import { Component } from '@angular/core';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
-  username!: string;
+  email!: string;
   password!: string;
   passwordConf!: string;
-  email!: string;
-  birthDate!: Date;
-  phoneNumber!: string;
 
   submit(){
     //submition code here
-  }
-
-  checkPhoneNumer(){
-    //function to check the phone number
-  }
-
-  checkEmailAdress(){
-    //function to check email adress
-  }
-
-  checkCastBirthDate(){
-    //function to check and convert birth date
-  }
-
-  checkPassword(){
-    //function to check if passwords matches or not
+    if(this.password != this.passwordConf)
+    {
+     console.log("les mots de passe ne correspondent pas");
+    }
+    else if(this.password.length < 6)
+    {
+      console.log("Ce mot de passe est a chier");
+    }
+    else
+    {
+    createUserWithEmailAndPassword(auth, this.email, this.password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+    }
   }
 }
+
