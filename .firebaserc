@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "simple-latex": {
+      "hosting": {
+        "SimpleLatex": [
+          "simple-latex"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "simple-latex"
+  }
+}
