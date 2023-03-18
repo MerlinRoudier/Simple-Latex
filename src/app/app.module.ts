@@ -10,45 +10,35 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material/datepicker'
-import { MatExpansionModule } from '@angular/material/expansion'
-import { MatSelectModule } from '@angular/material/select'
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatInputModule } from '@angular/material/input';
-import { LoginComponent } from './components/login/login.component';
-import { MainComponent } from './components/main/main.component';
-import { SigninComponent } from './components/signin/signin.component';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import {MatInputModule} from '@angular/material/input';
+
+import { AuthService } from "./shared/services/auth.service";
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    MainComponent,
-    SigninComponent,
+    HomepageComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    MatDatepickerModule,
-    MatExpansionModule,
-    MatSelectModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    MatInputModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     BrowserAnimationsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatInputModule
   ],
   providers: [
-    MatFormFieldModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
