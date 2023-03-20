@@ -17,7 +17,6 @@ import { AuthService } from "./shared/services/auth.service";
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +40,6 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     AuthService
   ],
   bootstrap: [AppComponent]
+
 })
 export class AppModule { }
-
