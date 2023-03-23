@@ -12,6 +12,8 @@
 <img src={{renderedB64Latex}}>
 <br>
 <input type ="text" #latexIpt >
-
 <button id="submit_button" type="button" (click)="getFormula(latexIpt.value)">submit</button>
+<br>
+<button id="send_data" type="button" (click)="registerFormula()">save</button>
+<button id="show_data" type="button" (click)="showAllFormulas()">show</button>
 <button id="Button_logOut" type="button" (click)="authService.SignOut()">Log Out</button>

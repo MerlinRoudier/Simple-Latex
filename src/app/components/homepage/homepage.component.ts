@@ -2,12 +2,11 @@ import {Component, OnInit, SimpleChange} from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, getFirestore, collection } from "firebase/firestore"
-import { DocumentData, DocumentSnapshot, QueryDocumentSnapshot } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/shared/services/api.service';
-import { Input, OnChanges , SimpleChanges} from '@angular/core';
 import { Latex } from 'src/app/latex';
+import { DataService } from 'src/app/shared/services/data.service';
+import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 // /* Importing the firebase config file. */
 
 @Component({
@@ -21,10 +20,13 @@ export class HomepageComponent implements OnInit  {
   email!: string;
   imageSrc = 'https://math.vercel.app/?from=LaTeX.svg';
   renderedB64Latex!: string;
+  latexExpr !: Latex;
+  history !: AngularFirestoreCollection<Latex>;
   constructor(
     public authService: AuthService,
     public apiService: ApiService,
     private router: Router,
+    public dataService: DataService
     ) {}
 
     ngOnInit(): void {
@@ -45,13 +47,37 @@ export class HomepageComponent implements OnInit  {
     }
 
 
-   public getFormula(latexStr: string): any {
-     this.apiService.getLatex(latexStr).subscribe((a: Latex)=>{
-      this.renderedB64Latex = 'data:image/svg;base64,'+a["base64"]
-      console.log(a['type'])
-      console.log(a)
-     })
+   public getFormula(latexStr: string): void {
+    if(latexStr.length != 0){
+        this.apiService.getLatex(latexStr).subscribe((a: Latex)=>{
+        this.renderedB64Latex = 'data:image/svg;base64,'+a["base64"]
+        this.latexExpr = a;
+      })
+    }
     }
 
+    public registerFormula(): void {
+      this.dataService.addLtx(this.latexExpr)
+    }
 
+    public showAllFormulas():void{
+      this.history = this.dataService.getAllCommands()
+      this.history.valueChanges().subscribe((commands: Latex[])=>{
+      const list = document.getElementById("hist") || document.createElement('ul');
+      if(list.innerHTML == ''){
+        list.id = "hist";
+        document.body.appendChild(list);
+      }
+      else{
+        list.innerHTML=''
+      }
+      commands.forEach((command)=>{
+        if(command.base64){
+          const item = document.createElement('img');
+          item.src='data:image/svg;base64,'+command.base64;
+          list.appendChild(item);
+        }
+        })
+      })
+    }
 }
