@@ -16,6 +16,9 @@ import {MatInputModule} from '@angular/material/input';
 import { AuthService } from "./shared/services/auth.service";
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ApiService } from './shared/services/api.service';
+
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -33,11 +36,13 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     provideFirestore(() => getFirestore()),
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    MatInputModule
+    MatInputModule,
+    HttpClientModule,
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
-    AuthService
+    AuthService,
+    ApiService
   ],
   bootstrap: [AppComponent]
 

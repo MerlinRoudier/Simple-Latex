@@ -2,9 +2,16 @@
 <h1 id="title">
     Simple Latex
 </h1>
-<img src="/src/assets/img/latex.svg" id="logo" alt="Latex" style="width:300px;height:50px;">
+<img src="assets/img/latex.svg" id="logo" alt="Latex" style="width:300px;height:50px;">
 <h2>
     Hello <div [innerHTML]="email"></div>
 </h2>
 <br>
+<!-- <input type = text id="input1" ([(ngModel)]="iptLatex")> -->
+
+<img src={{renderedB64Latex}}>
+<br>
+<input type ="text" #latexIpt >
+
+<button id="submit_button" type="button" (click)="getFormula(latexIpt.value)">submit</button>
 <button id="Button_logOut" type="button" (click)="authService.SignOut()">Log Out</button>
