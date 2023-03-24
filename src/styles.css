@@ -2,9 +2,32 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-body{background-color: #ffc6c6;}
+body{background-color: hwb(104 51% 17%);}
+
 #Button_logOut{
     position: fixed;
     bottom: 20px;
     right: 20px;
   }
+
+#logo{
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+#title{
+  text-align: center
+}
+
+button {
+  background-color: hsl(0, 0%, 100%);
+  color: black;
+  text-align: center;
+  font-size: 28px;
+  width: 150px;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  cursor: pointer;
+}
