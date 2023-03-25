@@ -1,55 +1,38 @@
-<div class="displayTable">
-  <h1 id="title">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Reset Password</title>
+</head>
+<body>
+<h1 id="title">
     Simple
     <img src="assets/img/latex.svg" id="logo" alt="Latex" style="width:300px;height:50px;">
   </h1>
-    <div class="displayTableCell">
-      <div class="authBlock">
         <h3>Sign Up</h3>
-        <div class="formGroup">
-          <input
-            type="email"
-            class="formControl"
-            placeholder="Email Address"
-            #userEmail
-            required
-          />
-        </div>
-        <div class="formGroup">
-          <input
-            type="password"
-            class="formControl"
-            placeholder="Password"
-            #userPwd
-            required
-          />
-        </div>
-        <div class="formGroup">
-          <input
-            type="button"
-            class="btn btnPrimary"
-            value="Sign Up"
-            (click)="authService.SignUp(userEmail.value, userPwd.value)"
-          />
-        </div>
-        <div class="formGroup">
-          <span class="or"><span class="orInner">Or</span></span>
-        </div>
-        <!-- Continue with Google -->
-        <div class="formGroup">
-          <button
-            type="button"
-            class="btn googleBtn"
-            (click)="authService.GoogleAuth()">
-            <i class="fab fa-google-plus-g"></i>
-            Continue with Google
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" #userEmail required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" #userPwd required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="button" (click)="authService.SignUp(userEmail.value, userPwd.value)">Sign up</button>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <div class="or">Or</div>
         </div>
-      </div>
-      <div class="redirectToLogin">
-        <span>Already have an account?
-          <button class="redirect" (click)="goTo('/sign-in')">Log In</button>
-        </span>
-      </div>
-    </div>
-  </div>
+        <br>
+        <button mat-raised-button color="primary" type="button" (click)="authService.GoogleAuth()" style="width:400px;">
+          <mat-icon class="material-icons">account_circle</mat-icon>
+          Continue with Google
+        </button>
+        <br><br>
+        <div >
+          <span>Already have an account?</span> 
+          <p>Go back to <a href="/sign-in">Log In</a></p>
+        </div>
+      </body>
+      </html>

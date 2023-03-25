@@ -8,12 +8,14 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AuthService } from "./shared/services/auth.service";
 import { HomepageComponent } from './components/homepage/homepage.component';
@@ -44,11 +46,12 @@ import { HttpClientModule } from '@angular/common/http';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     BrowserAnimationsModule,
-    MatSlideToggleModule,
     MatInputModule,
     HttpClientModule,
     MatButtonModule , 
     MatFormFieldModule,
+    MatIconModule,
+    MatToolbarModule,
   ],
   
   providers: [

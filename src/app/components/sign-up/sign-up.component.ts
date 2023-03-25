@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+  hide=true;
   constructor(
     public authService: AuthService,
     private router: Router

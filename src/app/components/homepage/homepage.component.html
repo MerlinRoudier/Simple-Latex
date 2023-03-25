@@ -1,4 +1,4 @@
-<link href="homepage.component.css" rel="stylesheet">
+<!-- <link href="homepage.component.css" rel="stylesheet">
 <h1 id="title">
     Simple
     <img src="assets/img/latex.svg" id="logo" alt="Latex" style="width:300px;height:50px;">
@@ -7,10 +7,10 @@
     Hello 
     <div [innerHTML]="email"></div>
 </h2>
-<br>
+<br> -->
 <!-- <input type = text id="input1" ([(ngModel)]="iptLatex")> -->
 
-<img id="imgLatex" src={{renderedB64Latex}}>
+<!-- <img id="imgLatex" src={{renderedB64Latex}}>
 <br>
 <mat-form-field id="CodeLatex">
     <mat-label>Put Latex Code</mat-label>
@@ -23,4 +23,39 @@
 <br><br>
 <button mat-flat-button (click)="showAllFormulas()">Show</button>
 
-<button mat-flat-button id="Button_logOut" (click)="authService.SignOut()">Log Out</button>
+<button mat-flat-button id="Button_logOut" (click)="authService.SignOut()">Log Out</button> -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Homepage</title>
+</head>
+<body>
+<h1 id="title">
+    Simple
+    <img src="assets/img/latex.svg" id="logo" alt="Latex" style="width:300px;height:50px;">
+  </h1>
+  
+  <h2>
+    Hello {{ email }}
+  </h2>
+  
+  <br>
+  
+  <img id="imgLatex" [src]="renderedB64Latex">
+  
+  <br>
+  
+  <mat-form-field id="CodeLatex">
+    <mat-label>Put Latex Code</mat-label>
+    <input matInput type="text" #latexIpt>
+  </mat-form-field>
+  
+  <br>
+  
+  <button mat-raised-button color="primary" (click)="getFormula(latexIpt.value)">Submit</button>
+  <button mat-raised-button color="accent" (click)="registerFormula()">Save</button>
+  <button mat-raised-button color="warn" (click)="showAllFormulas()">Show</button>
+  
+  <button mat-raised-button id="Button_logOut" (click)="authService.SignOut()">Log Out</button>
+</body>
+</html>
