@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { query, where, collection } from "firebase/firestore";
 import { Latex } from 'src/app/latex';
 
 @Injectable({
@@ -16,6 +17,10 @@ export class DataService {
 
   getAllCommands(): AngularFirestoreCollection<Latex>{
     return this.ltxRef;
+  }
+
+  getUserCommands(user: string): AngularFirestoreCollection<Latex>{
+    return this.db.collection(this.dbPath, ref=>ref.where("user", "==", user))
   }
 
   addLtx(ltx : Latex){

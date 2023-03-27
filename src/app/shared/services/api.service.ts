@@ -9,7 +9,9 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ApiService {
-  public baseURL = "https://latex.codecogs.com/png.json?";
+  //public baseURL = "https://latex.codecogs.com/png.json?";
+  public baseURL = "https://latex.codecogs.com/svg.image?";
+
   constructor(private http: HttpClient) {}
 
   toLaTeXUrl(input: string): string {
@@ -22,15 +24,18 @@ export class ApiService {
   }
 
 
-  getLatex(req : string): Observable<Latex>{
-    return this.http.get<any>(this.baseURL + this.toLaTeXUrl(req), {responseType: 'json'})
+
+  getLatex(req : string, user:string): Observable<Latex>{
+    return this.http.get(this.baseURL + this.toLaTeXUrl(req), {responseType: 'text'})
       .pipe(map(response => {
+          const index = response.indexOf( '\n',response.indexOf('\n')+1)
           return{
-          type: response.latex.type,
-          equation: response.latex.equation,
-          url: response.latex.url,
-          base64: response.latex.base64
+          user: user,
+          type: "svg",
+          equation: req,
+          url: this.baseURL+this.toLaTeXUrl(req),
+          svg: response.slice(index+1)
         } as Latex
       }))
-    }
+  }
 }

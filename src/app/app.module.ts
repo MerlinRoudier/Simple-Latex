@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 
 import { AuthService } from "./shared/services/auth.service";
 import { HomepageComponent } from './components/homepage/homepage.component';
@@ -48,12 +49,13 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MatInputModule,
     HttpClientModule,
-    MatButtonModule , 
+    MatButtonModule ,
     MatFormFieldModule,
     MatIconModule,
     MatToolbarModule,
+    MatListModule,
   ],
-  
+
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     AuthService,

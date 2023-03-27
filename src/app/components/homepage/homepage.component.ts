@@ -1,12 +1,14 @@
-import {Component, OnInit, SimpleChange} from '@angular/core';
+import {Component, OnInit, ElementRef, Injectable} from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, getFirestore, collection } from "firebase/firestore"
+import { doc, getDoc, getFirestore } from "firebase/firestore"
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { Latex } from 'src/app/latex';
 import { DataService } from 'src/app/shared/services/data.service';
 import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
+import { MatListModule } from '@angular/material/list';
 // /* Importing the firebase config file. */
 
 @Component({
@@ -19,14 +21,17 @@ import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 export class HomepageComponent implements OnInit  {
   email!: string;
   imageSrc = 'https://math.vercel.app/?from=LaTeX.svg';
-  renderedB64Latex!: string;
   latexExpr !: Latex;
   history !: AngularFirestoreCollection<Latex>;
+  displayable_history!: SafeHtml[];
+  svgAttribute!: string;
+  sanitizedHtmlContent !: SafeHtml;
   constructor(
     public authService: AuthService,
     public apiService: ApiService,
     private router: Router,
-    public dataService: DataService
+    public dataService: DataService,
+    public sanitizer: DomSanitizer,
     ) {}
 
     ngOnInit(): void {
@@ -34,8 +39,16 @@ export class HomepageComponent implements OnInit  {
         if (user) {
           const uid = user.uid;
           const docSnap = await getDoc(doc(getFirestore(), `users/${uid}`));
-          if (docSnap.exists())
+          if (docSnap.exists()){
             this.email = docSnap.data()['email'];
+            this.history = this.dataService.getUserCommands(this.email);
+            this.history.valueChanges().subscribe((commands: Latex[])=>{
+              this.displayable_history = [];
+              for(let c of commands){
+                this.displayable_history.push(this.sanitizer.bypassSecurityTrustHtml(c["svg"]))
+              }
+            })
+          }
           else {
             this.router.navigate(['register-user']);
           }
@@ -47,13 +60,21 @@ export class HomepageComponent implements OnInit  {
     }
 
 
-   public getFormula(latexStr: string): void {
-    if(latexStr.length != 0){
-        this.apiService.getLatex(latexStr).subscribe((a: Latex)=>{
-        this.renderedB64Latex = 'data:image/svg;base64,'+a["base64"]
-        this.latexExpr = a;
-      })
-    }
+    public getFormula(latexStr: string ): void {
+      if(latexStr.length != 0){
+        this.apiService.getLatex(latexStr, this.email).subscribe((a: Latex)=>{
+          this.latexExpr = a;
+
+          //string processing
+          let indexH = a["svg"].indexOf("height")+7
+          let indexW = a["svg"].indexOf("width")+6
+
+          a["svg"] = a["svg"].slice(0, indexW)+`'${150}pt' `+a["svg"].slice(indexW+14, indexH) + `'${150}pt' `+a["svg"].slice(indexH+14)
+
+          this.sanitizedHtmlContent = this.sanitizer.bypassSecurityTrustHtml(a["svg"])
+          console.log(a["svg"])
+        })
+      }
     }
 
     public registerFormula(): void {
@@ -61,23 +82,7 @@ export class HomepageComponent implements OnInit  {
     }
 
     public showAllFormulas():void{
-      this.history = this.dataService.getAllCommands()
-      this.history.valueChanges().subscribe((commands: Latex[])=>{
-      const list = document.getElementById("hist") || document.createElement('ul');
-      if(list.innerHTML == ''){
-        list.id = "hist";
-        document.body.appendChild(list);
-      }
-      else{
-        list.innerHTML=''
-      }
-      commands.forEach((command)=>{
-        if(command.base64){
-          const item = document.createElement('img');
-          item.src='data:image/svg;base64,'+command.base64;
-          list.appendChild(item);
-        }
-        })
-      })
+
     }
+
 }
