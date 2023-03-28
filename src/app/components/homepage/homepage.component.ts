@@ -46,6 +46,10 @@ export class HomepageComponent implements OnInit  {
             this.history.valueChanges().subscribe((commands: Latex[])=>{
               this.displayable_history = [];
               for(let c of commands){
+                //string processing
+                let indexH = c["svg"].indexOf("height")+7
+                let indexW = c["svg"].indexOf("width")+6
+                c["svg"] = c["svg"].slice(0, indexW)+`'${window.innerWidth-25}pt' `+c["svg"].slice(indexH-8, indexH) + `'${30}pt' `+c["svg"].slice(c["svg"].indexOf("viewBox")-1)
                 this.displayable_history.push(this.sanitizer.bypassSecurityTrustHtml(c["svg"]))
               }
             })
@@ -65,15 +69,15 @@ export class HomepageComponent implements OnInit  {
       if(latexStr.length != 0){
         this.apiService.getLatex(latexStr, this.email).subscribe((a: Latex)=>{
           this.latexExpr = a;
-
+          
           //string processing
           let indexH = a["svg"].indexOf("height")+7
           let indexW = a["svg"].indexOf("width")+6
 
-          a["svg"] = a["svg"].slice(0, indexW)+`'${150}pt' `+a["svg"].slice(indexW+14, indexH) + `'${150}pt' `+a["svg"].slice(a["svg"].indexOf("viewBox")-1)
+          a["svg"] = a["svg"].slice(0, indexW)+`'${50+Math.pow((latexStr.length),2)}pt' `+a["svg"].slice(indexH-8, indexH) + `'${25+Math.pow((latexStr.length),0.5)}pt' `+a["svg"].slice(a["svg"].indexOf("viewBox")-1)
 
           this.sanitizedHtmlContent = this.sanitizer.bypassSecurityTrustHtml(a["svg"])
-          console.log(a["svg"])
+          //console.log(a["svg"])
         })
       }
     }
@@ -82,8 +86,8 @@ export class HomepageComponent implements OnInit  {
       this.dataService.addLtx(this.latexExpr)
     }
 
-    public eraseFormula(id: string): void{
-      this.dataService.eraseFormula(id);
+    public eraseFormula(): void{
+      this.dataService.eraseFormula(this.email);
     }
 
 }

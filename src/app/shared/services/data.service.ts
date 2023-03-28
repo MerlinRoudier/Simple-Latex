@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { deleteDoc } from '@angular/fire/firestore';
-import { query, where, collection } from "firebase/firestore";
 import { Latex } from 'src/app/latex';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,10 @@ export class DataService {
   ltxRef:AngularFirestoreCollection<Latex>
 
 
-  constructor(private db: AngularFirestore) {
+  constructor(
+    private db: AngularFirestore,
+    private afs: AngularFirestore
+    ) {
     this.ltxRef = db.collection(this.dbPath)
   }
 
@@ -29,9 +32,13 @@ export class DataService {
     return this.ltxRef.add({ ...ltx })
   }
 
-  eraseFormula(id: string){
-    const docref = this.db.collection(this.dbPath)
-    console.log("AYAYa")
-    docref.doc(id).delete();
+  eraseFormula(email: string){
+    const collectionRef: AngularFirestoreCollection<any> = this.afs.collection(this.dbPath);
+    const query = collectionRef.ref.where('user', '==', email);
+    query.get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        doc.ref.delete();
+      });
+    });
   }
 }

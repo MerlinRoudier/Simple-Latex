@@ -34,17 +34,16 @@
  <div>
  History
   <mat-selection-list>
-    <mat-list *ngFor="let items of displayable_history">
+    <button mat-raised-button color="warn" (click)="eraseFormula()">Erase</button>
+
+    <mat-list-option id ="historique" *ngFor="let items of displayable_history">
       <div>
       <div id="item_hist_element" [innerHTML]="items" ></div>
-      <button mat-raised-button color="warn" (click)="eraseFormula('e')">Erase</button>
       <!-- Utiliser display-flex -->
-      <br>
       </div>
-    </mat-list>
+    </mat-list-option>
   </mat-selection-list>
 </div>
-
 
   <button mat-raised-button id="Button_logOut" (click)="authService.SignOut()">Log Out</button>
 </body>
