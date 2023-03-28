@@ -29,16 +29,21 @@
 
   <button mat-raised-button color="primary" (click)="getFormula(latexIpt.value)">Submit</button>
   <button mat-raised-button color="accent" (click)="registerFormula()">Save</button>
-  <button mat-raised-button color="accent" (click)="showAllFormulas()">Show</button>
-  <br>
-  <button mat-raised-button color="warn">Erases</button>
 
  <br>
+ <div>
+ History
   <mat-selection-list>
-    <mat-list-option *ngFor="let items of displayable_history">
-      <div id="item_hist_element" [innerHTML]="items"></div>
-    </mat-list-option>
+    <mat-list *ngFor="let items of displayable_history">
+      <div>
+      <div id="item_hist_element" [innerHTML]="items" ></div>
+      <button mat-raised-button color="warn" (click)="eraseFormula('e')">Erase</button>
+      <!-- Utiliser display-flex -->
+      <br>
+      </div>
+    </mat-list>
   </mat-selection-list>
+</div>
 
 
   <button mat-raised-button id="Button_logOut" (click)="authService.SignOut()">Log Out</button>

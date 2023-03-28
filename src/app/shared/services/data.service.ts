@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { deleteDoc } from '@angular/fire/firestore';
 import { query, where, collection } from "firebase/firestore";
 import { Latex } from 'src/app/latex';
 
@@ -28,4 +29,9 @@ export class DataService {
     return this.ltxRef.add({ ...ltx })
   }
 
+  eraseFormula(id: string){
+    const docref = this.db.collection(this.dbPath)
+    console.log("AYAYa")
+    docref.doc(id).delete();
+  }
 }

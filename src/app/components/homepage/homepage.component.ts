@@ -9,6 +9,7 @@ import { DataService } from 'src/app/shared/services/data.service';
 import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { MatListModule } from '@angular/material/list';
+import { Firestore } from '@angular/fire/firestore';
 // /* Importing the firebase config file. */
 
 @Component({
@@ -81,8 +82,8 @@ export class HomepageComponent implements OnInit  {
       this.dataService.addLtx(this.latexExpr)
     }
 
-    public showAllFormulas():void{
-
+    public eraseFormula(id: string): void{
+      this.dataService.eraseFormula(id);
     }
 
 }
