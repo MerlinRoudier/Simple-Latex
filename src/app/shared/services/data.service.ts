@@ -20,6 +20,7 @@ export class DataService {
   }
 
   getUserCommands(user: string): AngularFirestoreCollection<Latex>{
+
     return this.db.collection(this.dbPath, ref=>ref.where("user", "==", user))
   }
 

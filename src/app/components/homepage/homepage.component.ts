@@ -69,7 +69,7 @@ export class HomepageComponent implements OnInit  {
           let indexH = a["svg"].indexOf("height")+7
           let indexW = a["svg"].indexOf("width")+6
 
-          a["svg"] = a["svg"].slice(0, indexW)+`'${150}pt' `+a["svg"].slice(indexW+14, indexH) + `'${150}pt' `+a["svg"].slice(indexH+14)
+          a["svg"] = a["svg"].slice(0, indexW)+`'${150}pt' `+a["svg"].slice(indexW+14, indexH) + `'${150}pt' `+a["svg"].slice(a["svg"].indexOf("viewBox")-1)
 
           this.sanitizedHtmlContent = this.sanitizer.bypassSecurityTrustHtml(a["svg"])
           console.log(a["svg"])
