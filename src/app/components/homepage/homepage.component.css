@@ -1,8 +1,8 @@
-h2{
+h2 {
   text-align: center;
 }
 
-#codeLatex{
+#codeLatex {
   background-color: white;
   color: black;
   text-align: center;
@@ -15,7 +15,28 @@ h2{
   transition: all 0.5s;
 }
 
-#imgLatex{
+#imgLatex {
   text-align: center;
   width: 150px;
+}
+
+#pureSvg {
+  display: flex;
+  justify-content: center;
+}
+
+#item_hist_element {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.mat_list{
+  width: 50%;
 }
