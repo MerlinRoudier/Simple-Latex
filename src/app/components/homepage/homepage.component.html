@@ -1,8 +1,10 @@
 <html>
+
 <head>
-	<meta charset="UTF-8">
+  <meta charset="UTF-8">
   <title>Homepage</title>
 </head>
+
 <body>
   <h1 id="title">
     Simple
@@ -19,32 +21,42 @@
 
   </div>
   <br>
+  <div style="text-align: center;">
+    <mat-form-field id="CodeLatex">
+      <mat-label>Put Latex Code</mat-label>
+      <input matInput type="text" #latexIpt>
+    </mat-form-field>
+  </div>
+  <br>
 
-  <mat-form-field id="CodeLatex">
-    <mat-label>Put Latex Code</mat-label>
-    <input matInput type="text" #latexIpt>
-  </mat-form-field>
+  <div style="text-align: center;">
+    <button mat-raised-button color="primary" (click)="getFormula(latexIpt.value)">Submit</button>
+    <button mat-raised-button color="accent" (click)="registerFormula()">Save</button>
+  </div>
 
   <br>
 
-  <button mat-raised-button color="primary" (click)="getFormula(latexIpt.value)">Submit</button>
-  <button mat-raised-button color="accent" (click)="registerFormula()">Save</button>
+  <div style="text-align: center;">
+    <div style="display: inline-block;">History</div>
+    <br>
+    <mat-selection-list>
+      <button mat-raised-button color="warn" (click)="eraseFormula()">Erase</button>
 
- <br>
- <div>
- History
-  <mat-selection-list>
-    <button mat-raised-button color="warn" (click)="eraseFormula()">Erase</button>
-
-    <mat-list-option id ="historique" *ngFor="let items of displayable_history">
-      <div>
-      <div id="item_hist_element" [innerHTML]="items" ></div>
-      <!-- Utiliser display-flex -->
-      </div>
-    </mat-list-option>
-  </mat-selection-list>
-</div>
+      <mat-list id="historique" *ngFor="let items of displayable_history">
+        <div class="flex-container">
+          <div id="item_hist_element" [innerHTML]="items">
+          </div>
+          <mat-list-item class="mat_list">
+            <button mat-fab id="btDL" color="primary" (click)="downloadSvg(items)" [ngStyle]="{transform:'scale(0.8)'}">
+              <mat-icon>download</mat-icon>
+            </button>
+          </mat-list-item>
+        </div>
+      </mat-list>
+    </mat-selection-list>
+  </div>
 
   <button mat-raised-button id="Button_logOut" (click)="authService.SignOut()">Log Out</button>
 </body>
+
 </html>
