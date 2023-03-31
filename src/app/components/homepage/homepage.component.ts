@@ -10,6 +10,7 @@ import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { MatListModule } from '@angular/material/list';
 import { Firestore } from '@angular/fire/firestore';
+import { FileSaverService } from "ngx-filesaver";
 // /* Importing the firebase config file. */
 
 @Component({
@@ -33,6 +34,7 @@ export class HomepageComponent implements OnInit  {
     private router: Router,
     public dataService: DataService,
     public sanitizer: DomSanitizer,
+    private fileSaverService: FileSaverService
     ) {}
 
     ngOnInit(): void {
@@ -88,6 +90,14 @@ export class HomepageComponent implements OnInit  {
 
     public eraseFormula(): void{
       this.dataService.eraseFormula(this.email);
+    }
+
+    public downloadSvg(svgstr: SafeHtml){    
+      let htmlstr = svgstr.toString()
+      htmlstr = htmlstr.slice(htmlstr.indexOf("<svg")-1, htmlstr.lastIndexOf("svg>")+4)
+      let blob=new Blob([htmlstr]);    
+      this.fileSaverService.save(blob,'Latex_expr.svg');
+  
     }
 
 }
